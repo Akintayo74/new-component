@@ -122,6 +122,16 @@ mkDirPromise(componentDir)
     logItemCompletion('Index file built and saved to disk.');
     return template;
   })
+  // Add this new section:
+  .then((template) => {
+    const cssModulePath = `${componentDir}/${componentName}.module.css`;
+    const cssContent = prettify(`/* Styles for ${componentName} */\n`);
+    return writeFilePromise(cssModulePath, cssContent).then(() => template);
+  })
+  .then((template) => {
+    logItemCompletion('CSS module file created.');
+    return template;
+  })
   .then((template) => {
     logConclusion();
   })
